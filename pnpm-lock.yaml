@@ -20,9 +20,12 @@ dependencies:
   clsx:
     specifier: ^2.0.0
     version: 2.0.0
+<<<<<<< HEAD
   lucide-react:
     specifier: ^0.292.0
     version: 0.292.0(react@18.2.0)
+=======
+>>>>>>> c06ae28... CORS issue
   next:
     specifier: ^13.4.2
     version: 13.4.2(react-dom@18.2.0)(react@18.2.0)(sass@1.64.1)
@@ -1015,8 +1018,13 @@ packages:
     engines: {node: ^6 || ^7 || ^8 || ^9 || ^10 || ^11 || ^12 || >=13.7}
     hasBin: true
     dependencies:
+<<<<<<< HEAD
       caniuse-lite: 1.0.30001562
       electron-to-chromium: 1.4.585
+=======
+      caniuse-lite: 1.0.30001563
+      electron-to-chromium: 1.4.588
+>>>>>>> c06ae28... CORS issue
       node-releases: 2.0.13
       update-browserslist-db: 1.0.13(browserslist@4.22.1)
     dev: false
@@ -1055,8 +1063,13 @@ packages:
     resolution: {integrity: sha512-Vdhm5S11DaFVLlyiKu4hiUTkpZu+y1KA/rZZqVQfOD5YdDT/eQKlkt7NaE0WGOFgX32diqt9MiP9CAiFeRklaA==}
     dev: false
 
+<<<<<<< HEAD
   /caniuse-lite@1.0.30001562:
     resolution: {integrity: sha512-kfte3Hym//51EdX4239i+Rmp20EsLIYGdPkERegTgU19hQWCRhsRFGKHTliUlsry53tv17K7n077Kqa0WJU4ng==}
+=======
+  /caniuse-lite@1.0.30001563:
+    resolution: {integrity: sha512-na2WUmOxnwIZtwnFI2CZ/3er0wdNzU7hN+cPYz/z2ajHThnkWjNBOpEPP4n+4r2WPM847JaMotaJE3bnfzjyKw==}
+>>>>>>> c06ae28... CORS issue
     dev: false
 
   /ccount@2.0.1:
@@ -1247,8 +1260,13 @@ packages:
       esutils: 2.0.3
     dev: true
 
+<<<<<<< HEAD
   /electron-to-chromium@1.4.585:
     resolution: {integrity: sha512-B4yBlX0azdA3rVMxpYwLQfDpdwOgcnLCkpvSOd68iFmeedo+WYjaBJS3/W58LVD8CB2nf+o7C4K9xz1l09RkWg==}
+=======
+  /electron-to-chromium@1.4.588:
+    resolution: {integrity: sha512-soytjxwbgcCu7nh5Pf4S2/4wa6UIu+A3p03U2yVr53qGxi1/VTR3ENI+p50v+UxqqZAfl48j3z55ud7VHIOr9w==}
+>>>>>>> c06ae28... CORS issue
     dev: false
 
   /emoji-regex@9.2.2:
@@ -2388,6 +2406,7 @@ packages:
       yallist: 4.0.0
     dev: true
 
+<<<<<<< HEAD
   /lucide-react@0.292.0(react@18.2.0):
     resolution: {integrity: sha512-rRgUkpEHWpa5VCT66YscInCQmQuPCB1RFRzkkxMxg4b+jaL0V12E3riWWR2Sh5OIiUhCwGW/ZExuEO4Az32E6Q==}
     peerDependencies:
@@ -2396,6 +2415,8 @@ packages:
       react: 18.2.0
     dev: false
 
+=======
+>>>>>>> c06ae28... CORS issue
   /markdown-extensions@1.1.1:
     resolution: {integrity: sha512-WWC0ZuMzCyDHYCasEGs4IPvLyTGftYwh6wIEOULOF0HXcqZlhwRzrK0w2VUlxWA98xnvb/jszw4ZSkJ6ADpM6Q==}
     engines: {node: '>=0.10.0'}
