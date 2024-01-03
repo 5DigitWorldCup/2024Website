@@ -22,12 +22,17 @@ export default function LoginPage() {
 
     try {
       resp = await fetch(buildApiUrl('/auth/session/login'), {
-        credentials: 'include'
+        credentials: 'include',
+        cache: 'no-cache'
       });
     } catch(err) {
       console.error(err);
     }
+<<<<<<< HEAD
 
+=======
+    
+>>>>>>> 5f07921... Add delete account and change Discord functionality
     if (!resp?.ok) {
       const data = await resp?.text();
       console.info('Response: ' + data);
@@ -40,7 +45,7 @@ export default function LoginPage() {
     }
 
     console.info(await resp.text());
-    location.href = env.NEXT_PUBLIC_ORIGIN;
+    location.href = `${env.NEXT_PUBLIC_ORIGIN}?prompt_discord=true`;
   }, [shouldFetch]);
 
   console.log(error)
