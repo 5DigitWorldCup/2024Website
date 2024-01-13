@@ -29,10 +29,14 @@ export default function LoginPage() {
       console.error(err);
     }
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 =======
     
 >>>>>>> 5f07921... Add delete account and change Discord functionality
+=======
+
+>>>>>>> 3358e7e5a6fbaf8c83cf89acfb794df8518b0335
     if (!resp?.ok) {
       const data = await resp?.text();
       console.info('Response: ' + data);

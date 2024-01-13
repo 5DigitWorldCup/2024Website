@@ -8,7 +8,7 @@
   /* COLORS GENERATED WITH "FOUNDATION: COLOR GENERATOR" FIGMA PLUGIN */
 
   /* MATERIAL PROFILE */
-  --primary-100: hsl(165, 49%, 79%);
+  /* --primary-100: hsl(165, 49%, 79%);
   --primary-200: hsl(165, 49%, 69%);
   --primary-300: hsl(165, 49%, 55%);
   --primary-400: hsl(166, 57%, 46%);
@@ -16,7 +16,7 @@
   --primary-600: hsl(165, 100%, 30%);
   --primary-700: hsl(165, 100%, 23%);
   --primary-800: hsl(166, 100%, 18%);
-  --primary-900: hsl(165, 100%, 14%);
+  --primary-900: hsl(165, 100%, 14%); */
 
   /* ERROR */
   --error-100: hsl(0, 49%, 79%);
@@ -60,16 +60,11 @@
   --design-dark-green: hsl(189, 28%, 10%);
   --design-green: hsl(166, 100%, 33%);
 
-<<<<<<< HEAD
   // TOAST COLORS
   --toast-error: hsl(0, 82%, 70%);
-=======
+
   /* MISC. COLORS */
   --error-500: hsl(0, 62%, 48%);
-<<<<<<< HEAD
->>>>>>> 5f07921... Add delete account and change Discord functionality
-=======
-
 
 
    // NEW COLORS
@@ -98,7 +93,6 @@
    --primary-900: rgb(143, 12, 64);
    --primary-950: rgb(80, 1, 30);
 
->>>>>>> 3358e7e... New design colors
 }
 
 html,
@@ -137,6 +131,7 @@ button {
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 @keyframes fade-in {
   0% {
     opacity: 0;
@@ -144,6 +139,8 @@ button {
   100% {
     opacity: 1;
 =======
+=======
+>>>>>>> 3358e7e5a6fbaf8c83cf89acfb794df8518b0335
 .backdrop {
   display: flex;
   justify-content: center;
@@ -213,11 +210,15 @@ button {
 
   &:active {
     background-color: var(--primary-600);
+<<<<<<< HEAD
 >>>>>>> c06ae28... CORS issue
   }
 <<<<<<< HEAD
 }
 =======
+=======
+  }
+>>>>>>> 3358e7e5a6fbaf8c83cf89acfb794df8518b0335
 }
 
 .btn-error {
@@ -241,4 +242,7 @@ button {
     opacity: 1;
   }
 }
+<<<<<<< HEAD
 >>>>>>> 5f07921... Add delete account and change Discord functionality
+=======
+>>>>>>> 3358e7e5a6fbaf8c83cf89acfb794df8518b0335
