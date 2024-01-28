@@ -34,8 +34,16 @@ export default function LoginPage() {
       console.error(message);
       console.info('Response: ' + data);
 
+      let info = message;
+
+      if (json?.error === 'user disqualified') {
+        info += '. You have been disqualified from playing by an administrator';
+      } else if ((json?.detail as string || '').includes('registrations closed')) {
+        info += '. Registrations are closed';
+      }
+
       setError({
-        info: json?.error === 'user disqualified' ? `${message}. You have been disqualified from playing by an administrator` : message,
+        info,
         statusCode: resp?.status
       });
       return;
