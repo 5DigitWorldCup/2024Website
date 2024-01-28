@@ -165,6 +165,13 @@ export default function OrganizeTeamPage() {
   async function updateTeam(players: number[], backups: number[], movingTo: PlayerType) {
     let msgIfError = '';
 
+    if (env.NEXT_PUBLIC_REGISTRATION_END_DATE.getTime() < new Date().getTime()) {
+      setError({
+        info: 'Registrations are closed. You can no longer make changes to your roster'
+      });
+      return;
+    }
+
     if (movingTo === 'roster') {
       if (players.length > env.NEXT_PUBLIC_TEAM_MAX_PLAYERS) {
         setError({
