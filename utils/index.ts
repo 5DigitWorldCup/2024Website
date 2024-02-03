@@ -55,8 +55,6 @@ export function formatTimeLeft(date: Date) {
   const now = new Date();
   const diffInSeconds = Math.floor((date.getTime() - now.getTime()) / 1000);
   const thresholds = {
-    years: 31536000,
-    months: 2592000,
     days: 86400,
     hours: 3600,
     minutes: 60,
