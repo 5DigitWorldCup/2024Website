@@ -420,7 +420,7 @@ export default function OrganizeTeamPage() {
                     (player.rank_standard_bws ?? 0) < 10_000 ||
                     (player.rank_standard_bws ?? 0) > 99_999
                   }
-                  disableWhenInRoster
+                  candidate
                 />
               ))}
             </div>

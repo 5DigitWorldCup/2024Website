@@ -10,7 +10,7 @@ type Props = {
   player: PlayerT;
   isSelected?: boolean;
   holdingCtrl: boolean;
-  disableWhenInRoster?: boolean;
+  candidate?: boolean;
   disabled?: boolean;
   onClick: () => void;
 };
@@ -46,7 +46,7 @@ export default function Player({
   onClick,
   isSelected,
   holdingCtrl,
-  disableWhenInRoster,
+  candidate,
   disabled
 }: Props) {
   const className = clsx(
@@ -56,35 +56,50 @@ export default function Player({
 
   return (
     <div className={styles.container}>
-      {((player.in_roster || player.in_backup_roster) && disableWhenInRoster) ||
-      (player.rank_standard_bws ?? 0) < 10_000 ||
-      (player.rank_standard_bws ?? 0) > 99_999 ? (
+      {!isSelected && (((player.in_roster || player.in_backup_roster) && candidate) ||
+        (player.rank_standard_bws ?? 0) < 10_000 ||
+        (player.rank_standard_bws ?? 0) > 99_999) ? (
         holdingCtrl ? (
           <a
             className={styles.disabledText}
             href={`https://osu.ppy.sh/users/${player.osu_user_id}`}
           >
-            {(player.rank_standard_bws ?? 0) < 10_000 || (player.rank_standard_bws ?? 0) > 99_999
-              ? 'Ineligible'
-              : player.in_roster
-              ? 'Roster'
-              : 'Reserved'}
+            {
+              candidate
+                ? player.in_roster ? 'Roster' : player.in_backup_roster ? 'Reserved' : 'Ineligible'
+                : (player.rank_standard_bws ?? 0) < 10_000 || (player.rank_standard_bws ?? 0) > 99_999
+                  ? 'Ineligible'
+                  : player.in_roster
+                    ? 'Roster'
+                    : 'Reserved'
+            }
           </a>
         ) : (
-          <div className={clsx(styles.disabledText, styles.notAllowedCursor)}>
-            {(player.rank_standard_bws ?? 0) < 10_000 || (player.rank_standard_bws ?? 0) > 99_999
-              ? 'Ineligible'
-              : player.in_roster
-              ? 'Roster'
-              : 'Reserved'}
-          </div>
+          <button
+            className={clsx(
+              styles.disabledText,
+              !((player.in_roster || player.in_backup_roster) && !candidate) ? styles.notAllowedCursor : undefined,
+              styles.disabledTextBtn
+            )}
+            onClick={(player.in_roster || player.in_backup_roster) && !candidate ? onClick : undefined}
+          >
+            {
+              candidate
+                ? player.in_roster ? 'Roster' : player.in_backup_roster ? 'Reserved' : 'Ineligible'
+                : (player.rank_standard_bws ?? 0) < 10_000 || (player.rank_standard_bws ?? 0) > 99_999
+                  ? 'Ineligible'
+                  : player.in_roster
+                    ? 'Roster'
+                    : 'Reserved'
+            }
+          </button>
         )
       ) : undefined}
       {holdingCtrl ? (
         <a
           className={clsx(
             className,
-            ((player.in_roster || player.in_backup_roster) && disableWhenInRoster) || disabled
+            ((player.in_roster || player.in_backup_roster) && candidate) || disabled
               ? styles.playerDisabled
               : undefined
           )}
@@ -97,7 +112,7 @@ export default function Player({
           className={className}
           onClick={onClick}
           disabled={
-            ((player.in_roster || player.in_backup_roster) && disableWhenInRoster) || disabled
+            ((player.in_roster || player.in_backup_roster) && candidate) || disabled
           }
         >
           <PlayerContent player={player} holdingCtrl={holdingCtrl} />
