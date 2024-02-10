@@ -26,7 +26,7 @@ env:
   # {number} Date in which users can log in. Represented in milliseconds
   NEXT_PUBLIC_REGISTRATION_START_DATE: 1705945200000
   # {number} Date in which organizers are no longer able to make changes to the roster (including backup players). Represented in milliseconds
-  NEXT_PUBLIC_REGISTRATION_END_DATE: 1707696000000
+  NEXT_PUBLIC_REGISTRATION_END_DATE: 1708300799000
 
 jobs:
   build-job:
