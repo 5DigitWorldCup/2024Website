@@ -162,12 +162,12 @@ export default function OrganizeTeamPage() {
     setCtrlState(false);
   }
 
-  async function updateTeam(players: number[], backups: number[], movingTo: PlayerType) {
+  async function updateTeam(players: number[], backups: number[], captain: number | undefined, movingTo: PlayerType | null) {
     let msgIfError = '';
 
-    if (env.NEXT_PUBLIC_REGISTRATION_END_DATE.getTime() < new Date().getTime()) {
+    if (env.NEXT_PUBLIC_ROSTER_SELECTION_END.getTime() < new Date().getTime()) {
       setError({
-        info: 'Registrations are closed. You can no longer make changes to your roster'
+        info: 'Roster selection has ended. You can no longer make changes to your roster'
       });
       return;
     }
@@ -197,8 +197,10 @@ export default function OrganizeTeamPage() {
       }
 
       msgIfError = 'Failed to move player to reserved players roster';
-    } else {
+    } else if (movingTo === 'candidate') {
       msgIfError = 'Failed to move player to list of candidates';
+    } else {
+      msgIfError = `Failed to ${captain ? 'assign' : 'unassign'} player the role of captain`;
     }
 
     const csrf = getCsrfToken();
@@ -212,7 +214,7 @@ export default function OrganizeTeamPage() {
     const url = buildApiUrl(
       `/teams/${user?.osu.country.code}/members/?limit=${fetchLimit}&page=${page}`
     );
-    const body = JSON.stringify({ players, backups });
+    const body = JSON.stringify({ players, backups, captain });
 
     try {
       resp = await fetch(url, {
@@ -274,42 +276,56 @@ export default function OrganizeTeamPage() {
     if (!team) return;
     const players = team.roster.map(mapToUserId).concat(selectedUserIds);
     const backups = team.backups.map(mapToUserId);
-    await updateTeam(players, backups, 'roster');
+    await updateTeam(players, backups, team?.captain?.user_id, 'roster');
   }
 
   async function candidateToBackup() {
     if (!team) return;
     const players = team.roster.map(mapToUserId);
     const backups = team.backups.map(mapToUserId).concat(selectedUserIds);
-    await updateTeam(players, backups, 'backup');
+    await updateTeam(players, backups, team?.captain?.user_id, 'backup');
   }
 
   async function rosterToCandidate() {
     if (!team) return;
     const players = team.roster.map(mapToUserId).filter(filterSelectedIds);
     const backups = team.backups.map(mapToUserId);
-    await updateTeam(players, backups, 'candidate');
+    await updateTeam(players, backups, team?.captain?.user_id, 'candidate');
   }
 
   async function rosterToBackup() {
     if (!team) return;
     const players = team.roster.map(mapToUserId).filter(filterSelectedIds);
     const backups = team.backups.map(mapToUserId).concat(selectedUserIds);
-    await updateTeam(players, backups, 'backup');
+    await updateTeam(players, backups, team?.captain?.user_id, 'backup');
   }
 
   async function backupToCandidate() {
     if (!team) return;
     const players = team.roster.map(mapToUserId);
     const backups = team.backups.map(mapToUserId).filter(filterSelectedIds);
-    await updateTeam(players, backups, 'candidate');
+    await updateTeam(players, backups, team?.captain?.user_id, 'candidate');
   }
 
   async function backupToRoster() {
     if (!team) return;
     const players = team.roster.map(mapToUserId).concat(selectedUserIds);
     const backups = team.backups.map(mapToUserId).filter(filterSelectedIds);
-    await updateTeam(players, backups, 'roster');
+    await updateTeam(players, backups, team?.captain?.user_id, 'roster');
+  }
+
+  async function assignCaptain() {
+    if (!team) return;
+    const players = team.roster.map(mapToUserId);
+    const backups = team.backups.map(mapToUserId);
+    await updateTeam(players, backups, selectedUserIds[0], 'roster');
+  }
+
+  async function unassignCaptain() {
+    if (!team) return;
+    const players = team.roster.map(mapToUserId);
+    const backups = team.backups.map(mapToUserId);
+    await updateTeam(players, backups, undefined, 'roster');
   }
 
   function changePage(n: number) {
@@ -334,9 +350,9 @@ export default function OrganizeTeamPage() {
     <>
       <div className={styles.pageContainer}>
         <div className={styles.timeLeft}>
-          {env.NEXT_PUBLIC_REGISTRATION_END_DATE.getTime() > new Date().getTime()
+          {env.NEXT_PUBLIC_ROSTER_SELECTION_END.getTime() > new Date().getTime()
             ? `You have ${formatTimeLeft(
-                env.NEXT_PUBLIC_REGISTRATION_END_DATE
+                env.NEXT_PUBLIC_ROSTER_SELECTION_END
               )} left to set your roster and reserved players`
             : 'You can no longer make any changes to your roster or reserved players'}
         </div>
@@ -356,18 +372,33 @@ export default function OrganizeTeamPage() {
             ) : undefined}
             <div className={styles.scroll}>
               <div className={styles.playersContainer}>
-                {team.roster.map((player) => (
+                {team.captain ? (
                   <Player
-                    key={`roster-${player.user_id}`}
-                    player={player}
+                    key={`roster-${team.captain.user_id}`}
+                    player={team.captain}
                     isSelected={
-                      selectedUserIds.includes(player.user_id) && selectingFrom === 'roster'
+                      selectedUserIds.includes(team.captain.user_id) && selectingFrom === 'roster'
                     }
-                    onClick={() => onUserBtnClick(player.user_id, 'roster')}
+                    onClick={() => onUserBtnClick(team?.captain?.user_id || 0, 'roster')}
                     holdingCtrl={ctrl}
                     disabled={selectingFrom && selectingFrom !== 'roster'}
+                    captain
                   />
-                ))}
+                ) : undefined}
+                <>
+                  {team.roster.filter((player) => player.user_id !== team?.captain?.user_id).map((player) => (
+                    <Player
+                      key={`roster-${player.user_id}`}
+                      player={player}
+                      isSelected={
+                        selectedUserIds.includes(player.user_id) && selectingFrom === 'roster'
+                      }
+                      onClick={() => onUserBtnClick(player.user_id, 'roster')}
+                      holdingCtrl={ctrl}
+                      disabled={selectingFrom && selectingFrom !== 'roster'}
+                    />
+                  ))}
+                </>
               </div>
             </div>
           </div>
@@ -505,6 +536,16 @@ export default function OrganizeTeamPage() {
               </>
             ) : (
               <>
+                {selectedUserIds.length === 1 && !team.captain ? (
+                  <button onClick={assignCaptain} className='btn'>
+                    Make Captain
+                  </button>
+                ) : undefined}
+                {selectedUserIds.length === 1 && team.captain?.user_id === selectedUserIds[0] ? (
+                  <button onClick={unassignCaptain} className='btn'>
+                    Remove Captain
+                  </button>
+                ) : undefined}
                 <button onClick={rosterToBackup} className='btn'>
                   Reserve
                 </button>

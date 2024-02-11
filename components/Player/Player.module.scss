@@ -63,10 +63,28 @@
 .selectedPlayer {
   --color: white;
   background-color: var(--primary-500);
+
+  .captainLabel {
+    color: var(--primary-500);
+    background-color: white;
+  }
 }
 
 .selectedPlayer:hover {
   background-color: var(--primary-600);
+}
+
+.captainLabel {
+  position: absolute;
+  padding: 0.15rem 0.5rem;
+  top: 0.5rem;
+  right: 0.5rem;
+  font-weight: 500;
+  font-size: 0.85rem;
+  color: white;
+  background-color: var(--primary-500);
+  border-radius: 5px;
+  transition: all 0.2s ease-out;
 }
 
 .pfp {

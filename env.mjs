@@ -30,6 +30,10 @@ export const env = createEnv({
     NEXT_PUBLIC_REGISTRATION_END_DATE: z
       .number()
       .int()
+      .transform((value) => new Date(value)),
+    NEXT_PUBLIC_ROSTER_SELECTION_END: z
+      .number()
+      .int()
       .transform((value) => new Date(value))
   },
   runtimeEnv: {
@@ -47,6 +51,9 @@ export const env = createEnv({
     ),
     NEXT_PUBLIC_REGISTRATION_END_DATE: numberOrUndefined(
       process.env.NEXT_PUBLIC_REGISTRATION_END_DATE
+    ),
+    NEXT_PUBLIC_ROSTER_SELECTION_END: numberOrUndefined(
+      process.env.NEXT_PUBLIC_ROSTER_SELECTION_END
     )
   },
   skipValidation: false

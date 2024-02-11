@@ -25,8 +25,10 @@ env:
   NEXT_PUBLIC_TEAM_MAX_BACKUPS: 3
   # {number} Date in which users can log in. Represented in milliseconds
   NEXT_PUBLIC_REGISTRATION_START_DATE: 1705945200000
+  # {number} Date in which users can no longer log in. Represented in milliseconds
+  NEXT_PUBLIC_REGISTRATION_END_DATE: 1707696000000
   # {number} Date in which organizers are no longer able to make changes to the roster (including backup players). Represented in milliseconds
-  NEXT_PUBLIC_REGISTRATION_END_DATE: 1708300799000
+  NEXT_PUBLIC_ROSTER_SELECTION_END: 1708214400000
 
 jobs:
   build-job:

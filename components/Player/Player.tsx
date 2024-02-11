@@ -11,13 +11,17 @@ type Props = {
   isSelected?: boolean;
   holdingCtrl: boolean;
   candidate?: boolean;
+  captain?: boolean;
   disabled?: boolean;
   onClick: () => void;
 };
 
-function PlayerContent({ player, holdingCtrl }: Pick<Props, 'player' | 'holdingCtrl'>) {
+function PlayerContent({ player, holdingCtrl, captain }: Pick<Props, 'player' | 'holdingCtrl' | 'captain'>) {
   return (
     <>
+      {captain ? (
+        <span className={styles.captainLabel}>Captain</span>
+      ) : undefined}
       <Image
         className={styles.pfp}
         alt={`pfp-${player.user_id}`}
@@ -47,6 +51,7 @@ export default function Player({
   isSelected,
   holdingCtrl,
   candidate,
+  captain,
   disabled
 }: Props) {
   const className = clsx(
@@ -115,7 +120,7 @@ export default function Player({
             ((player.in_roster || player.in_backup_roster) && candidate) || disabled
           }
         >
-          <PlayerContent player={player} holdingCtrl={holdingCtrl} />
+          <PlayerContent player={player} holdingCtrl={holdingCtrl} captain={captain} />
         </button>
       )}
     </div>

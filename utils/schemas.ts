@@ -47,6 +47,7 @@ export const playerSchema = z.object({
   discord_username: z.string(),
   osu_user_id: z.number().int(),
   osu_username: z.string(),
+  is_captain: z.boolean(),
   in_roster: z.boolean(),
   in_backup_roster: z.boolean(),
   rank_standard: z.number().int().nullable(),
@@ -55,6 +56,7 @@ export const playerSchema = z.object({
 
 export const teamSchema = z.object({
   osu_flag: z.string(),
+  captain: playerSchema.nullable(),
   roster: z.array(playerSchema),
   backups: z.array(playerSchema),
   candidates: z.object({
